@@ -28,6 +28,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider :libvirt do |v|
     v.memory = memory
     v.cpus = cpus
+    v.loader = "/usr/share/OVMF/OVMF_CODE.fd"
   end
 
   config.vm.synced_folder ".", "/vagrant", type: "rsync"
@@ -94,7 +95,7 @@ EOF
   config.vm.provision "install-golang", type: "shell", run: "once" do |sh|
     sh.upload_path = "/tmp/vagrant-install-golang"
     sh.env = {
-        'GO_VERSION': ENV['GO_VERSION'] || "1.20.8",
+        'GO_VERSION': ENV['GO_VERSION'] || "1.20.10",
     }
     sh.inline = <<~SHELL
         #!/usr/bin/env bash
